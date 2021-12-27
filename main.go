@@ -24,7 +24,7 @@ func runScript(app list.Element) {
 }
 
 func fetchAppList() list.List {
-	url := "https://gist.githubusercontent.com/ygorazambuja/218867894f1243ce950a3c47dbe0adfb/raw/a13077e7c562fbd822dee7af7ba9de942a4a35b2/gistfile1.json"
+	url := "https://raw.githubusercontent.com/ygorazambuja/WindowsInitial/main/apps.json"
 
 	resp, err := http.Get(url)
 
