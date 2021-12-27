@@ -21,19 +21,15 @@ jobs:
         path: ./build/WindowsInitial-windows-amd64.exe
         if-no-files-found: error
         retention-days: 1
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ./build/WindowsInitial-windows-amd64.exe
   release:
     name: Release WindowsInitial new version
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: ./build/WindowsInitial-windows-amd64.exe
-      - name: Archive artifact
-        uses: thedoctor0/zip-release@master
-        with:
-          filename: app.zip
       - name: Create Github Release
         id: create-release
         uses: actions/create-release@v1
