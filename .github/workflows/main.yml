@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,22 +14,12 @@ jobs:
         platforms: 'windows/amd64'
         name: 'WindowsInitial'
         dest: 'build'
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v2
-      with:
-        name: WindowsInitial-windows-amd64.exe
-        path: ./build/WindowsInitial-windows-amd64.exe
-        if-no-files-found: error
-        retention-days: 1
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: ./build/WindowsInitial-windows-amd64.exe
-  release:
-    name: Release WindowsInitial new version
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+      - uses: actions/checkout@v2
+      - uses: thatisuday/go-cross-build@v1
+        with:
+          platforms: 'windows/amd64'
+          name: 'WindowsInitial'
+          dest: 'build'
       - name: Create Github Release
         id: create-release
         uses: actions/create-release@v1
