@@ -17,8 +17,8 @@ jobs:
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
       with:
-        name: WindowsInitial.exe
-        path: ./WindowsInitial.exe
+        name: WindowsInitial-windows-amd64.exe.exe
+        path: ./WindowsInitial-windows-amd64.exe.exe
         if-no-files-found: error
         retention-days: 1
   release:
