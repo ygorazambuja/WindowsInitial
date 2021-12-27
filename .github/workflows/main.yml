@@ -13,14 +13,12 @@ jobs:
       uses: thatisuday/go-cross-build@v1
       with:
         platforms: 'windows/amd64'
-        package: ''
         name: 'WindowsInitial'
-        compress: 'true'
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
       with:
-        name: WindowsInitial-windows-amd64.tar.gz
-        path: WindowsInitial-windows-amd64.tar.gz
+        name: WindowsInitial.exe
+        path: ./WindowsInitial.exe
         if-no-files-found: error
         retention-days: 1
   release:
