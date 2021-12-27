@@ -9,16 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Generate build files
-      uses: thatisuday/go-cross-build@v1
+    - uses: thatisuday/go-cross-build@v1
       with:
         platforms: 'windows/amd64'
         name: 'WindowsInitial'
+        dest: 'build'
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
       with:
         name: WindowsInitial-windows-amd64.exe
-        path: ./WindowsInitial-windows-amd64.exe
+        path: ./build/WindowsInitial-windows-amd64.exe
         if-no-files-found: error
         retention-days: 1
   release:
