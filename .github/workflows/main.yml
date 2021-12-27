@@ -16,12 +16,11 @@ jobs:
         package: ''
         name: 'WindowsInitial'
         compress: 'true'
-        dest: 'dist'
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
       with:
         name: WindowsInitial-windows-amd64.tar.gz
-        path: /dist/WindowsInitial-windows-amd64.tar.gz
+        path: WindowsInitial-windows-amd64.tar.gz
         if-no-files-found: error
         retention-days: 1
   release:
