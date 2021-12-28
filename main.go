@@ -10,17 +10,23 @@ import (
 	"os/exec"
 )
 
-func runScript(app list.Element) {
+func installChocolatey() {
+	chocolateyCommand := "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
-	appValue := fmt.Sprintf("%v", app.Value)
-	fmt.Println("Instalando:", appValue)
-
-	if c, err := exec.Command("cmd", "/c", "choco", "install", appValue).CombinedOutput(); err != nil {
+	if c, err := exec.Command("powershell", chocolateyCommand).CombinedOutput(); err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Printf("%s\n", c)
 	}
+}
 
+func runScripts() {
+
+	apps := fetchAppList()
+
+	for element := apps.Front(); element != nil; element = element.Next() {
+		runScript(*element)
+	}
 }
 
 func fetchAppList() list.List {
@@ -53,27 +59,21 @@ func fetchAppList() list.List {
 	return *appList
 }
 
-func runScripts() {
+func runScript(app list.Element) {
 
-	apps := fetchAppList()
+	appValue := fmt.Sprintf("%v", app.Value)
+	fmt.Println("Instalando:", appValue)
 
-	for element := apps.Front(); element != nil; element = element.Next() {
-		runScript(*element)
-	}
-}
-
-type Result []struct {
-	Appname string `json:"appname"`
-}
-
-func installChocolatey() {
-	chocolateyCommand := "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
-
-	if c, err := exec.Command("powershell", chocolateyCommand).CombinedOutput(); err != nil {
+	if c, err := exec.Command("cmd", "/c", "choco", "install", appValue).CombinedOutput(); err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Printf("%s\n", c)
 	}
+
+}
+
+type Result []struct {
+	Appname string `json:"appname"`
 }
 
 func main() {
@@ -81,5 +81,4 @@ func main() {
 
 	installChocolatey()
 	runScripts()
-
 }
