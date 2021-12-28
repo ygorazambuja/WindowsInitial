@@ -66,8 +66,20 @@ type Result []struct {
 	Appname string `json:"appname"`
 }
 
+func installChocolatey() {
+	chocolateyCommand := "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+
+	if c, err := exec.Command("powershell", chocolateyCommand).CombinedOutput(); err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Printf("%s\n", c)
+	}
+}
+
 func main() {
 	// fmt.Println("Executando scripts")
 
+	installChocolatey()
 	runScripts()
+
 }
